@@ -1,5 +1,7 @@
 package com.spring.pr.command;
 
+import java.sql.Date;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -35,4 +37,9 @@ public class SlctnVO {
 	private String SelSubcat;
 	private int SelScore;
 	private String JoinId;
+	
+	//추가
+	private String TotalCLASSIFICATION;
+	
+	private Date TotalDate;
 }

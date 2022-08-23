@@ -18,7 +18,7 @@
 
 	<!-- css, img, js ... 의 파일 경로가 복잡할 때 많이 사용  -->
 	<resources mapping="/resources/**" location="/resources/" />
-	<resources mapping="/images/**" location="/resources/images/" />
+	<resources mapping="/img/**" location="/resources/img/" />
 	<resources mapping="/css/**" location="/resources/css/" />
 	<resources mapping="/fonts/**" location="/resources/fonts/" />
 	<resources mapping="/js/**" location="/resources/js/" />
@@ -27,18 +27,6 @@
 	<beans:bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
 		<beans:property name="prefix" value="/WEB-INF/views/" />
 		<beans:property name="suffix" value=".jsp" />
-	</beans:bean>
-	
-	<!-- 파일 업로드 -->
-	<!-- 반드시 id를 저렇게 작성해야 함 
-		 Multipart 형식으로 전달되는 데이터를 스프링 MVC에서 사용할 수 있도록 변환해주는 객체  -->
-	<beans:bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
-		<!-- 업로드 가능한 파일의 최대 크기(바이트 단위)  -->
-		<beans:property name="maxUploadSize" value="20485760" />
-		<!-- 최대 업로드 용량 10메가로 고정 -->
-		
-		<!-- 업로드 요청을 반환할 때 사용할 문자 인코딩 방식  -->
-		<beans:property name="defaultEncoding" value="utf-8" />
 	</beans:bean>
 	
 	

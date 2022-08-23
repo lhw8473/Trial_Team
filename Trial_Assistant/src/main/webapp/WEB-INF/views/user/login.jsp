@@ -31,11 +31,34 @@ https://templatemo.com/tm-559-zay-shop
 
 /* Start joinSelect.css */
 
-/* login.html의 css*/
+.person-check::after{
+    content: "";
+    display: block;
+    clear: both;
+}
+
+.person-o-total{
+    float: left;
+    margin-left: 100px;
+}
+.person-x-total{
+    float: right;
+    margin-right: 100px;
+}
+.next-btn{
+    text-align: center;
+}
+
+.next-btn-box{
+    margin-top: 50px;
+}
+/* End joinSelect.html의 css */
+
+/* Start join.html의 css*/
 .title-box{
     text-align: center;
     justify-content: center;
-    margin: 0 auto 100px;
+    margin: 0 auto 50px;
     font-size: 30px !important;
     border:1px solid lightgray;
     border-radius: 40px;
@@ -44,11 +67,38 @@ https://templatemo.com/tm-559-zay-shop
     color: rgb(132, 127, 127);
     font-weight: 500 !important;
 }
-
-.form-box{
-    max-width: 400px;
+/*btn-outline-secondary 적용시 왼쪽 짤림 보완 스타일 */
+.btn-add-style{
+    border-left: 2px solid gray;
+    background-color: white;
 
 }
+
+
+
+.form-box{
+    max-width: 600px;
+    min-width: 400px;
+}
+.gender-male-total{
+    float: left;
+    margin-right: 200px;
+}
+.gender-male, .gender-female{
+    margin-right: 30px;
+}
+
+.gender::after {
+ content: "";
+ display: block;
+ clear: both;
+}
+
+.gender {
+margin: 10px 0;
+}
+
+
 
 label {
     font-weight: 700 !important;
@@ -57,28 +107,18 @@ label {
 button:hover{
     cursor: pointer;
 }
-.btn-box{
-    margin-top: 70px;
-    margin-left: 33px;
-    width: 100%;
+
+.join-btn, .cencel-btn{
+    text-align: center;
 }
 
-.id-btn{
-    float: left;
-    margin: 0 5px;
-    box-sizing: border-box;
+.join-btn{
+    margin-left: 90px;
 }
-.pw-btn{
-    float: left;
-    margin: 0 5px;
-    box-sizing: border-box;
+.cencel-btn{
+    margin-right: 90px;
 }
-.login-btn{
-    float: left;
-    margin: 0 5px;
-    box-sizing: border-box;
-    
-}
+/* End join.html의 css*/
 
 
 </style>

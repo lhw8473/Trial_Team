@@ -2,6 +2,8 @@ package com.spring.pr.command;
 
 
 
+
+
 import java.sql.Date;
 
 import lombok.AllArgsConstructor;
@@ -29,6 +31,8 @@ public class AncmtVO {
 		anm_degree VARCHAR2(50) NOT NULL,
 		anm_start DATE NOT NULL, 
 		anm_end DATE NOT NULL
+		anm_year VARCHAR2(10) NOT NULL,
+		anm_division VARCHAR2(10) NOT NULL
 		);	
 	
 	CREATE SEQUENCE anm_no_seq_name
@@ -39,15 +43,36 @@ public class AncmtVO {
 	    NOCACHE; 
 	*/
 	
-	private int AnmNum;
-	private Date AnmUploadDate;
-	private String AnmTitle;
-	private String AnmContent;
-	private String AnmFileLoca;
-	private int AnmViewCnt;
-	private String ManagerId;
-	private String AnmDegree;
-	private Date AnmStart;
-	private Date AnmEnd;
+	//
+	private int AnmNum;	//공고 번호
+	private Date AnmUploadDate;	//공고 작성 날짜
+	private String AnmTitle;	//공고 제목
+	private String AnmContent;	//공고 내용
+	private String AnmFileLoca;	//공고 파일 경로
+	private int AnmViewCnt;	//공고 조회수
+	private String ManagerId;	//공고 작성자
+	private String AnmDegree;	//공고 차수
+	private Date AnmStart; //공고 시작일
+	private Date AnmEnd;	//공고 마감일
+	private String AnmDivision; //공고 조력자 구분
+	private String AnmYear; //공고 년도
 	
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

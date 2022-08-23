@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<mapper namespace="com.spring.pr.ratingcriteria.mapper.IRCriteriaMapper">
+	
+	<!-- 
+			CREATE TABLE RatingCriteria (
+		RC_NUM_SEQ	NUMBER(10)	NOT NULL,
+		RC_APC_NAME	VARCHAR2(50)	NOT NULL,	//신청자 ㅇ름
+		RC_TOTAL_CAREER	VARCHAR2(20)	NULL,	//통산경력
+		RC_LOCAL_CAREER	VARCHAR2(20)	NULL,	//관내경력
+		RC_OFFICE_LOCA	VARCHAR2(50)	NOT NULL,	//사무소 소재지
+		RC_PERSONALY_EVALUATION	VARCHAR2(10)	NOT NULL,	//인성평가
+		RC_INTERVIEW_EVALUATION	VARCHAR2(10)	NOT NULL,	//면접평가
+		RC_CERITIFICATION_NAME1	VARCHAR2(30)	NULL,	//자격증
+		RC_CERITIFICATION_NAME2	VARCHAR2(30)	NULL,	//자격증
+		RC_CERITIFICATION_NAME3	VARCHAR2(30)	NULL,	//자격증
+		RC_CERITIFICATION_NAME4	VARCHAR2(30)	NULL,	//자격증
+		RC_TOTAL_SCORE	NUMBER	NOT NULL,	//총합
+		RC_APPRAISER_SCORE	NUMBER	NOT NULL,	//감정인평정표
+		RC_AJM_JDGE_SCORE	NUMBER	 DEFAULT 0 NULL,	//조정평점, 심사위원점수합계
+		RC_LAST_TOTAL_SCORE	NUMBER	NOT NULL,	//최종합계
+		JOIN_ID	VARCHAR(255)	NOT NULL	//신청자아이디
+		);
+		
+		CREATE SEQUENCE RC_NUM_SEQ_NAME
+		    START WITH 1
+		    INCREMENT BY 1  
+		    MAXVALUE 1000
+		    NOCYCLE 
+		    NOCACHE;
+		    
+		    private int RcNum;
+	private String RcApcName;
+	private String RcTotalCareer;
+	private String RcLocalCareer;
+	private String RcOfficeLoca;
+	
+	private String RcPersonalyEvaluation;
+	private String RcInterviewEvaluation;
+	private String RcCeritificationName1;
+	private String RcCeritificationName2;
+	private String RcCeritificationName3;
+	private String RcCeritificationName4;
+	private int RcTotalScore;
+	private int RcAppraiserScore;
+	private int RcAjmJdgeScore;
+	private int RcLastTotalScore;
+	private String JoinId;
+	 -->
+	 
+	 <resultMap type="com.spring.pr.command.RatingCriteriaVO" id="RCriteria">
+		<!-- 기본키는 id 태그를 사용하고 나머지는 result 태그를 사용 -->
+		<id column = "RC_NUM_SEQ" property="RcNum"/>
+
+		<result column ="RC_APC_NAME" property = "RcApcName"/>
+		<result column ="RC_TOTAL_CAREER" property = "RcTotalCareer"/>
+		<result column ="RC_LOCAL_CAREER" property = "RcLocalCareer"/>
+		<result column ="RC_OFFICE_LOCA" property = "RcOfficeLoca"/>
+		<result column ="RC_PERSONALY_EVALUATION" property = "RcPersonalyEvaluation"/>
+		<result column ="RC_INTERVIEW_EVALUATION" property = "RcInterviewEvaluation"/>
+		<result column ="RC_CERITIFICATION_NAME1" property = "RcCeritificationName1"/>
+		<result column ="RC_CERITIFICATION_NAME2" property = "RcCeritificationName2"/>
+		<result column ="RC_CERITIFICATION_NAME3" property = "RcCeritificationName3"/>
+		<result column ="RC_CERITIFICATION_NAME4" property = "RcCeritificationName4"/>
+		<result column ="RC_TOTAL_SCORE" property = "RcTotalScore"/>
+		<result column ="RC_APPRAISER_SCORE" property = "RcAppraiserScore"/>
+		<result column ="RC_AJM_JDGE_SCORE" property = "RcAjmJdgeScore"/>
+		<result column ="RC_LAST_TOTAL_SCORE" property = "RcLastTotalScore"/>
+		<result column ="JOIN_ID" property = "JoinId"/>
+	</resultMap>
+	
+	<resultMap type="com.spring.pr.command.UserBasicVO" id="UserBasicMap">
+      <id column="JOINID" property="JoinId"/>
+   </resultMap>
+	
+	<insert id="regist">
+		INSERT INTO RatingCriteria 
+		(RC_NUM_SEQ, 
+		RC_APC_NAME, 
+		RC_TOTAL_CAREER,
+		RC_LOCAL_CAREER,
+		RC_OFFICE_LOCA,
+		RC_PERSONALY_EVALUATION, 
+		RC_INTERVIEW_EVALUATION,
+		RC_CERITIFICATION_NAME1,
+		RC_CERITIFICATION_NAME2,
+		RC_CERITIFICATION_NAME3,
+		RC_CERITIFICATION_NAME4,
+		RC_TOTAL_SCORE,
+		RC_APPRAISER_SCORE,
+		RC_AJM_JDGE_SCORE, 
+		RC_LAST_TOTAL_SCORE, 
+		JOIN_ID)
+		VALUES (RC_NUM_SEQ_NAME.NEXTVAL, #{RcApcName}, #{RcTotalCareer}, #{RcLocalCareer}, #{RcOfficeLoca},
+		 #{RcPersonalyEvaluation}, #{RcInterviewEvaluation}, #{RcCeritificationName1}, #{RcCeritificationName2},
+		 #{RcCeritificationName3}, #{RcCeritificationName4}, #{RcTotalScore}, #{RcAppraiserScore},
+		 #{RcAjmJdgeScore}, #{RcLastTotalScore}, #{JoinId})
+	</insert>
+	
+	<!-- 
+		SELECT <열 목록>
+ 			FROM <첫 번째 테이블>
+          INNER JOIN <두 번째 테이블>
+          	ON <조인될 조건>
+ 				[WHERE 검색 조건]
+	 -->
+	<select id="getContent" resultMap="RCriteria">
+		SELECT 
+			rc.RC_APC_NAME,
+			rc.RC_TOTAL_CAREER,
+			rc.RC_LOCAL_CAREER,
+			rc.RC_OFFICE_LOCA,
+			rc.RC_PERSONALY_EVALUATION,
+			rc.RC_INTERVIEW_EVALUATION,
+			rc.RC_CERITIFICATION_NAME1,
+			rc.RC_CERITIFICATION_NAME2,
+			rc.RC_CERITIFICATION_NAME3,
+			rc.RC_CERITIFICATION_NAME4,
+			rc.RC_TOTAL_SCORE,
+			rc.RC_APPRAISER_SCORE,
+			rc.RC_AJM_JDGE_SCORE,
+			rc.RC_LAST_TOTAL_SCORE,
+			rc.JOIN_ID,
+			ub.JOIN_SOC_NUM
+			FROM RatingCriteria rc LEFT JOIN UserBasic ub
+			ON rc.JOIN_ID = ub.JOIN_ID
+			WHERE ub.JOIN_ID = #{JoinId}
+	</select>
+
+	<update id="update">
+	UPDATE (
+	SELECT RC_TOTAL_CAREER,
+	        RC_LOCAL_CAREER,
+	        RC_OFFICE_LOCA,
+	        RC_PERSONALY_EVALUATION,
+	        RC_INTERVIEW_EVALUATION,  
+	        RC_CERITIFICATION_NAME1,
+	        RC_CERITIFICATION_NAME2,
+	        RC_CERITIFICATION_NAME3,
+	        RC_CERITIFICATION_NAME4,
+	        RC_TOTAL_SCORE,
+	        RC_APPRAISER_SCORE,
+	        RC_AJM_JDGE_SCORE,
+	        RC_LAST_TOTAL_SCORE
+	FROM RatingCriteria rc LEFT JOIN UserBasic ub ON rc.JOIN_ID = ub.JOIN_ID)
+	        SET
+			RC_TOTAL_CAREER = #{RcTotalCareer}, RC_LOCAL_CAREER = #{RcLocalCareer},
+			RC_OFFICE_LOCA = #{RcOfficeLoca}, 
+	        RC_PERSONALY_EVALUATION = #{RcPersonalyEvaluation},
+			RC_INTERVIEW_EVALUATION = #{RcInterviewEvaluation}, 
+			RC_CERITIFICATION_NAME1 = #{RcCeritificationName1},
+			RC_CERITIFICATION_NAME2 = #{RcCeritificationName2},
+			RC_CERITIFICATION_NAME3 = #{RcCeritificationName3},
+			RC_CERITIFICATION_NAME4 = #{RcCeritificationName4},
+			RC_TOTAL_SCORE = #{RcTotalScore},
+			RC_APPRAISER_SCORE = #{RcAppraiserScore},
+			RC_AJM_JDGE_SCORE = #{RcAjmJdgeScore},
+			RC_LAST_TOTAL_SCORE = #{RcLastTotalScore}
+	</update>
+	
+	
+</mapper>

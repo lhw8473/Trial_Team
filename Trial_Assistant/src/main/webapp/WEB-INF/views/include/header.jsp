@@ -10,8 +10,6 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>인덱스를 만들어 보자</title>
-    
-    
 	
 
 </head>
@@ -65,7 +63,7 @@
                     <div class="flex-fill">
                         <ul class="header_text nav navbar-nav d-flex justify-content-between mx-lg-auto ">
                             <li class="nav-item">
-                                <a class="nav-link" href="index.html">공고</a>
+                                <a class="nav-link" href="<c:url value='/announcement/announcementList?page=1&cpp=10'/>">공고</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" href="about.html">공지사항</a>
@@ -73,7 +71,12 @@
                             <li class="nav-item">
                                 <a class="nav-link" href="shop.html">조력자 신청 </a>
                             </li>
-                            
+                            <li class="nav-item">
+                                <a class="nav-link" href="<c:url value='/applicant/applicantList?page=1&cpp=10'/>">현황조회(관리자)</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="contact.html">기관정보(관리자)</a>
+                            </li>
                         </ul>
                     </div>
     

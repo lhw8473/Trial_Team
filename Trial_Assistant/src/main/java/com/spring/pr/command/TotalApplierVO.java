@@ -37,4 +37,5 @@ public class TotalApplierVO {
 	private String AppWhtrIngb;
 	private Timestamp AppDate;
 	private String AppClassification;
+	private String AppName;
 }

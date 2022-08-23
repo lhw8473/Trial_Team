@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<mapper namespace="com.spring.pr.approval.mapper.IApprovalMapper">
+
+	<!--VO객체이름과 DB의 컬럼명이 다를 때 맞춰주는 작업  -->
+	<resultMap type="com.spring.pr.command.SlctnVO" id="SlctnMap">
+		<id column = "SEL_NUM_SEQ" property="SelNum"/>
+
+		<result column ="SEL_NAME" property = "SelName"/>
+		<result column ="SEL_SUBCAT" property = "SelSubcat"/>
+		<result column ="SEL_SCORE" property = "SelScore"/>
+		<result column ="JOINID" property = "JoinId"/>
+		<!-- 추가 -->
+		<result column ="APP_CLASSIFICATION" property = "TotalCLASSIFICATION"/>
+		<result column ="APP_DATE" property = "TotalDate"/>
+		
+	</resultMap>
+	
+	<resultMap type="com.spring.pr.command.TotalApplierVO" id="TotalApplier">
+		<id column = "APP_NUM_SEQ" property="AppNum"/>
+		<result column ="JOINID" property = "JoinId"/>
+		<result column ="APP_WHTR_INGB" property = "AppWhtrIngb"/>
+		<result column ="APP_DATE" property = "AppDate"/>
+		<result column ="APP_CLASSIFICATION" property = "AppClassification"/>
+		<result column ="APP_NAME" property = "AppName"/>
+	</resultMap>
+
+	<sql id="search">
+	   
+	   	<if test='keyword != null'>
+	   		WHERE SEL_NAME = #{keyword}
+	   	</if>
+	   	<if test='keyword == null'>
+	   	</if>
+   </sql>
+	
+	
+	<select id ="getList" resultMap="SlctnMap">
+		
+		SELECT * FROM
+			(
+			SELECT ROWNUM AS rn, tbl.*FROM
+				(
+				SELECT 
+					SEL_NUM_SEQ,
+					total.APP_CLASSIFICATION,
+					SEL_NAME,
+					total.APP_DATE
+					FROM Slctn sel LEFT JOIN TotalApplier total ON sel.JOINID = total.JOINID
+					<include refid="search"/>
+					ORDER BY SEL_NUM_SEQ DESC 
+				)tbl
+			)
+		<![CDATA[
+	      WHERE rn > (#{pageNum}-1) * #{cpp}
+	      AND rn <= #{pageNum} * #{cpp}
+     	]]>
+
+	</select>
+	
+	
+	<select id="getContent" resultMap="SlctnMap">
+		 
+		SELECT  
+			SEL_NUM_SEQ,
+		 	SEL_NAME, 
+		 	SEL_SUBCAT,
+		  	SEL_SCORE, 
+		  	total.APP_DATE,
+		  	total.APP_CLASSIFICATION
+		  	FROM Slctn sel LEFT JOIN TotalApplier total ON sel.JOINID = total.JOINID
+		  	WHERE SEL_NUM_SEQ = #{SelNum}
+		
+	</select>
+	
+	<select id="getTotal" resultType="int">
+		SELECT COUNT(*) FROM Slctn
+	</select>
+	
+	<!-- 제목, 내용, 년도, 차수, 공고기간, 조력자구분, 파일  (공고상태는 굳이 컬럼에 넣어주지 않음.)-->
+
+	<delete id="delete">
+		DELETE FROM Slctn WHERE SEL_NUM_SEQ= #{SelNum}
+	</delete>
+	
+	<!-- 검색 필터도 추가 -->
+
+</mapper>

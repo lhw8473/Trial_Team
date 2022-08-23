@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<mapper namespace="com.spring.pr.unqualify.mapper.IUnqualifyMapper">
+	
+	
+	<!--VO객체이름과 DB의 컬럼명이 다를 때 맞춰주는 작업  -->
+	<resultMap type="com.spring.pr.command.UnqualifyVO" id="UnqualifyMap">
+		<id column = "JOINID" property="JoinId"/>
+		<result column ="UNQ_REASON" property = "UnqReason"/>
+		<result column="APP_NUM_SEQ" property="AppNumSeq"/>
+		<result column="APP_CLASSIFICATION" property="AppClassification"/>
+		<result column="APP_DATE" property="AppDate"/>
+		<result column="JOINNAME" property="JoinName"/>
+	</resultMap>
+	
+	<resultMap type="com.spring.pr.command.UserBasicVO" id="UserBasicMap">
+		<id column = "JOINID" property="JoinId"/>
+		<result column="JOINSOCNUM" property="JoinSocNum"/>
+		<result column ="UNQ_REASON" property = "UnqReason"/>
+	</resultMap>
+	
+	<resultMap type="com.spring.pr.command.TotalApplierVO" id="TotalApplierMap">
+		<id column = "APP_NUM_SEQ" property="AppNum"/>
+		<result column ="JOINID" property = "JoinId"/>
+		<result column ="APP_WHTR_INGB" property = "AppWhtrIngb"/>
+		<result column ="APP_DATE" property = "AppDate"/>
+		<result column ="APP_CLASSIFICATION" property = "AppClassification"/>
+		<result column ="APP_NAME" property = "AppName"/>
+	</resultMap>
+	
+	<resultMap type="com.spring.pr.command.UserDetailVO" id="UserDetailMap">
+		<id column = "APP_NUM_SEQ" property="JoinSocNum"/>
+		<result column ="JOIN_ID" property = "JoinName"/>
+		<result column ="APP_WHTR_INGB" property = "AppWhtrIngb"/>
+		<result column="JOINSOCNUM" property="JoinSocNum"/>
+	</resultMap>
+	
+	
+	<sql id="search">
+	   	<if test="condition == '기관조력자'">
+	   		 WHERE ta.APP_CLASSIFICATION = #{condition}
+        		AND ud.joinname= #{keyword};
+	   	</if>
+	   	<if test="condition == '일반조력자'">
+	   		 WHERE ta.APP_CLASSIFICATION = #{condition}
+        		AND ud.joinname= #{keyword};
+	   	</if>
+	   	<if test="condition == '통번역인'">
+	   		 WHERE ta.APP_CLASSIFICATION = #{condition}
+        		AND ud.joinname= #{keyword};
+	   	</if>
+	   	<!-- <if test="keyword == null and keyword.equals('')">
+	   		WHERE ANM_DIVISION = #{condition}
+	   	</if>
+	   	<if test="condition == null and condition.equals('')">
+	   		WHERE ANM_TITLE LIKE '%'||#{keyword}||'%'
+	   	</if> -->
+	   	
+   </sql>
+   
+	<select id ="getList" resultMap="UnqualifyMap">
+
+		SELECT * FROM
+			(
+			SELECT ROWNUM AS rn, tbl.*FROM
+				(
+				SELECT 
+					ta.APP_NUM_SEQ,
+					ta.APP_CLASSIFICATION,
+					ta.APP_DATE,		
+					un.JOINID,
+                    ud.joinname
+					FROM Unqualify un INNER JOIN TotalApplier ta
+					on un.JoinId = ta.joinId
+                    INNER JOIN userbasic ub 
+                    ON ta.joinid = ub.joinid 
+                    INNER JOIN userdetail ud
+                    ON ub.joinsocnum = ud.joinsocnum
+                    <include refid="search"/>
+				)tbl
+			)
+		<![CDATA[
+	      WHERE rn > (#{pageNum}-1) * #{cpp}
+	      AND rn <= #{pageNum} * #{cpp}
+     	]]> -->
+
+	</select>
+	
+	
+	<select id="getContent" resultMap="UnqualifyMap">
+		SELECT * FROM Announcement WHERE ANM_NO_SEQ = #{AnmNum}
+	</select>
+	
+	<select id="getTotal" resultType="int">
+	
+		SELECT COUNT(*) FROM Unqualify
+	
+	</select>
+	
+	<!-- 제목, 내용, 년도, 차수, 공고기간, 조력자구분, 파일  (공고상태는 굳이 컬럼에 넣어주지 않음.)-->
+	<update id="update">
+		<!-- 
+		UPDATE ANNOUNCEMENT SET ANM_TITLE = #{AnmTitle}, ANM_CONTENT= #{AnmContent}, ANM_YEAR = #{AnmYear},
+		ANM_DEGREE = #{AnmDegree}, ANM_START = #{AnmStart}, ANM_END = #{AnmEnd}, 
+		ANM_DIVISION = #{AnmDivision}, ANM_FILE_LOCA = #{AnmFileLoca} 
+		where ANM_NO_SEQ = #{AnmNum}  
+		 -->
+	</update>
+	
+	<delete id="delete">
+		<!-- DELETE FROM Unqualify WHERE ANM_NO_SEQ = #{JoinId} -->
+	</delete>
+	
+	<!-- 검색 필터도 추가 -->
+
+</mapper>
